@@ -4,15 +4,21 @@ object OptionValidator:
 
   // 1. Créer une fonction qui valide le port (entre 1 et 65535)
   def validatePort(port: Int): Option[Int] =
-    if port < 1 || port > 65535 then None else Some(port)
+    if port < 1 || port > 65535
+    then None
+    else Some(port)
 
   // 2. Créer une fonction qui valide le host (non vide et non blanc)
   def validateHost(host: String): Option[String] =
-    if host.trim.nonEmpty then Some(host.trim) else None
+    if host.trim.nonEmpty
+    then Some(host.trim)
+    else None
 
   // 3. Créer une fonction qui valide le timeout (> 0)
   def validateTimeout(timeout: Int): Option[Int] =
-    if timeout < 0 then None else Some(timeout)
+    if timeout < 0
+    then None
+    else Some(timeout)
 
   // 4. Créer une fonction qui transforme une RawConfig en ValidatedConfig
   // Toutes les valeurs doivent être présentes et valides
@@ -24,10 +30,7 @@ object OptionValidator:
       validHost <- validateHost(host)
       timeout <- config.timeout
       validTimeout <- validateTimeout(timeout)
-    } yield ValidatedConfig(
-      host = validHost,
-      port = validPort,
-      timeout = validTimeout)
+    } yield ValidatedConfig(host = validHost, port = validPort, timeout = validTimeout)
 
   // 5. Créer une fonction qui construit une URL depuis une ValidatedConfig
   // Format: "http://host:port"
@@ -45,7 +48,5 @@ object OptionValidator:
     ValidatedConfig(
       host = host.getOrElse("localhost"),
       port = port.getOrElse(8080),
-      timeout = timeout.getOrElse(3000))
-
-
-
+      timeout = timeout.getOrElse(3000)
+    )
